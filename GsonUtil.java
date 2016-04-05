@@ -1,59 +1,55 @@
-package com.tonyjiang.mytourism;
+package util;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import com.tonyjiang.mytourism.po.Knowledge;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Iterator;
-
-/**
- * Created by TonyJiang on 2016/4/4.
- */
 public class GsonUtil {
-    public static ArrayList JsonArray2JavaList(String result,Class tClass){
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public static ArrayList JsonArray2JavaList(String result,Class tClass){
         Gson gson = new Gson();
-        //åˆ›å»ºçŸ¥è¯†åº“å¯¹è±¡çš„ArrayList
+        //´´½¨ÖªÊ¶¿â¶ÔÏóµÄArrayList
         ArrayList list = new ArrayList();
-        //åˆ›å»ºä¸€ä¸ªJsonElementå…ƒç´  å°†resultä»Stringè½¬æ¢æˆJsonElement
+        //´´½¨Ò»¸öJsonElementÔªËØ ½«result´ÓString×ª»»³ÉJsonElement
         JsonElement el = new JsonParser().parse(result);
-        //æ–°å»ºJsonArray
+        //ĞÂ½¨JsonArray
         JsonArray jsonArray = null;
-        //åˆ¤æ–­æ˜¯å¦æ˜¯ä¸€ä¸ªJsonArray
+        //ÅĞ¶ÏÊÇ·ñÊÇÒ»¸öJsonArray
         if(el.isJsonArray()){
-            //å¦‚æœæ˜¯ åˆ™å°†å…¶è½¬æ¢æˆJsonArray
+            //Èç¹ûÊÇ Ôò½«Æä×ª»»³ÉJsonArray
             jsonArray = el.getAsJsonArray();
         }
-        //æ–°å»ºä¸€ä¸ªè¿­ä»£å™¨ è·å–JsonArrayçš„è¿­ä»£
+        //ĞÂ½¨Ò»¸öµü´úÆ÷ »ñÈ¡JsonArrayµÄµü´ú
         Iterator it = jsonArray.iterator();
-        //åˆ¤æ–­jsonArrayä¸­æœ‰æ²¡æœ‰ä¸‹ä¸€ä¸ªå…ƒç´ 
+        //ÅĞ¶ÏjsonArrayÖĞÓĞÃ»ÓĞÏÂÒ»¸öÔªËØ
         while(it.hasNext()){
-            //å­˜åœ¨åˆ™è·å–è¯¥å…ƒç´ 
+            //´æÔÚÔò»ñÈ¡¸ÃÔªËØ
             JsonElement e = (JsonElement) it.next();
-            //å°†è¯¥å…ƒç´ ä»JSONè½¬æ¢æˆbeanå¯¹è±¡
-            Object oValue = gson.fromJson(e,tClass);
-            //å°†è¯¥beanå¯¹è±¡å¡åˆ°ArrayListé‡Œé¢å»
+            //½«¸ÃÔªËØ´ÓJSON×ª»»³Ébean¶ÔÏó
+			Object oValue = gson.fromJson(e,tClass);
+            //½«¸Ãbean¶ÔÏóÈûµ½ArrayListÀïÃæÈ¥
             list.add(oValue);
         }
         return list;
     }
-
-    public static String Java2Json(Object obj){
+	
+	public static String Java2Json(Object obj){
         Gson gson = new Gson();
         String result = gson.toJson(obj);
         return result;
     }
-
+	@SuppressWarnings({ "rawtypes" })
     public static String JavaList2Json(ArrayList list){
         Gson gson = new Gson();
         String result = gson.toJson(list);
         return result;
     }
-
-    public static Object Json2Java(String result,Class tClass){
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+    public static Object Json2Java(String result, Class tClass){
         Gson gson = new Gson();
         return gson.fromJson(result,tClass);
     }
